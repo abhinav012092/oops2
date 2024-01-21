@@ -1,7 +1,7 @@
 package linkedlists;
 import java.util.*;
 
-public class double_LL_reverse {
+public class double_LL_remove_dup {
 	public static Scanner sc=new Scanner(System.in);
 	public static class Node {
 		int val=0;
@@ -18,25 +18,30 @@ public class double_LL_reverse {
 			this.back=back;
 		}
 	}
-	public static Node reverse(Node head) {
-		if(head==null||head.next==null) return head;
-		Node prev=null;
+	public static Node remove_dup(Node head) {
+		Node temp=new Node(-1);
+		Node newHead=temp;
 		Node curr=head;
 		while(curr!=null) {
-			prev=curr.back;
-			curr.back=curr.next;
-			curr.next=prev;
-			curr=curr.back;
+			while(curr!=null&&temp.val==curr.val) {
+				curr=curr.next;
+			}
+			temp.next=curr;
+			curr.back=temp;
+			temp=temp.next;
+			if(curr!=null) {
+				curr=curr.next;
+			}
 		}
-		return prev.back;
+		return newHead.next;
 	}
 	public static Node createList(int n) {
 		Node dummy=new Node((int)1e8);
-		Node mover=dummy;
+		Node prev=dummy;
 		while(n-- >0) {
-			Node temp=new Node(sc.nextInt(),null,mover);
-			mover.next=temp;
-			mover=temp;
+			Node temp=new Node(sc.nextInt(),null,prev);
+			prev.next=temp;
+			prev=prev.next;
 		}
 		Node head=dummy.next;
 		head.back=null;
@@ -52,9 +57,9 @@ public class double_LL_reverse {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int n=sc.nextInt();
-		Node head=createList(n);
-		Node dll=reverse(head);
-		printList(dll);
+		Node dll=createList(n);
+		Node res=remove_dup(dll);
+		printList(res);
 	}
 
 }
