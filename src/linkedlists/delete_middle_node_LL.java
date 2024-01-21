@@ -1,49 +1,52 @@
 package linkedlists;
 import java.util.*;
 
-import linkedlists.intersection_of_two_ll_2.ListNode;
-
-public class linkedlist_cycle {
-	public static Scanner sc = new Scanner(System.in);
+public class delete_middle_node_LL {
+	public static Scanner sc=new Scanner(System.in);
+	
 	public static class ListNode {
 		int val=0;
 		ListNode next=null;
 		ListNode(int val){
 			this.val=val;
+			this.next=null;
 		}
 		ListNode(int val, ListNode next){
 			this.val=val;
 			this.next=next;
 		}
 	}
-	public static boolean hasCycle(ListNode head) {
-		if(head==null||head.next==null) return false;
+	
+	public static ListNode deleteMid(ListNode head) {
+		if(head==null||head.next==null) {
+			return null;
+		}
+		ListNode temp=head;
+		if(temp.next.next==null) {
+			temp.next=null;
+			return temp;
+		}
 		ListNode slow=head;
 		ListNode fast=head;
+		fast=fast.next.next;
 		while(fast!=null && fast.next!=null) {
 			slow=slow.next;
-			fast=fast.next.next;
-			if(slow==fast) return true;
+			fast=fast.next;
 		}
-		return false;
+		slow.next=slow.next.next;
+		return head;
 	}
 	
-	public static void createCycle(ListNode head, int pos) {
-		ListNode ptr=head;
-		ListNode temp=head;
-		int cnt=0;
-		while(temp.next!=null) {
-			if(cnt!=pos) {
-				++cnt;
-				ptr=ptr.next;
-			}
-			temp=temp.next;
+	public static void printList(ListNode head) {
+		while(head!=null) {
+			System.out.print(head.val+"=>");
+			head=head.next;
 		}
-		temp.next=ptr;
+		System.out.println("null");
 	}
 	
 	public static ListNode createList(int n) {
-		ListNode dummy = new ListNode((int)1e8);
+		ListNode dummy=new ListNode(-1);
 		ListNode prev=dummy;
 		while(n-- >0) {
 			prev.next=new ListNode(sc.nextInt());
@@ -56,8 +59,8 @@ public class linkedlist_cycle {
 		// TODO Auto-generated method stub
 		int n=sc.nextInt();
 		ListNode ll=createList(n);
-		//createCycle(ll,2);
-		System.out.println(hasCycle(ll));
+		ListNode res=deleteMid(ll);
+		printList(res);
 	}
 
 }

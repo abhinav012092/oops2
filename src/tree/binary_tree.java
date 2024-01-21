@@ -1,5 +1,7 @@
 package tree;
 
+import java.util.Queue;
+
 public class binary_tree {
 	
 	public class Node{
@@ -93,6 +95,88 @@ public class binary_tree {
 		nn.left=createPreIn(pre,ps+1,ps+ls,in,is,f-1);
 		nn.right=createPreIn(pre,ps+ls+1, pe, in, f+1, ie);
 		return nn;
+	}
+	public void lvl() {
+		Queue<Node> Q=new LinkedList<>();
+		Q.add(root);
+		while(!Q.isEmpty()) {
+			Node temp=Q.poll();
+			System.out.println(temp.data);
+			if(temp.left!=null) {
+				Q.add(temp.left);
+			}
+			if(temp.right!=null) {
+				Q.add(temp.right);
+			}
+		}
+	}
+	public void lvl2() {
+		Queue<Node> Q=new LinkedList<>();
+		Q.add(root);
+		int size_currlvl=Q.size();
+		while(!Q.isEmpty()) {
+			for(int cnt=1;cnt<=size_currlvl;cnt++) {
+				Node temp=Q.poll();
+				System.out.print(temp.data);
+				if(temp.left!=null) {
+					Q.add(temp.left);
+				}
+				if(temp.right!=null) {
+					Q.add(temp.right);
+				}
+			}
+			size_currlvl=Q.size();
+		}
+	}
+	
+	public BinaryTree(int[] lvl, int ll) {
+		Queue<Node> Q=new LinkedList<>();
+		root=new Node(lvl[0]);
+		Q.add(root);
+		int idx=1;
+		while(!Q.isEmpty() && idx<lvl.length) {
+			Node nn=Q.poll();
+			if(idx<lvl.length && arr[idx]!=-1) {
+				nn.left=new Node(arr[idx]);
+				Q.add(nn.left);
+			}
+			idx++;
+			if(idx<lvl.length && arr[idx]!=-1) {
+				nn.right=new Node(arr[idx]);
+				Q.add(nn.right);
+			}
+			idx++;
+		}
+	}
+	
+	public boolean isBal() {
+		return isBal(root);
+	}
+	
+	class isBalpair {
+		boolean isB=true;
+		int ht=-1;
+	}
+	
+	private isBalpair isBal2(Node nn) {
+		if(nn==null) return new isBalpair();
+		
+		isBalpair L=isBal2(nn.left);
+		isBalpair R=isBal2(nn.right);
+		
+		boolean self=Math.abs(L.ht-R.ht)<=1;
+		isBalpair ans= new isBalpair();
+		ans.ht=Math.max(L.ht, R.ht);
+		return ans;
+	}
+	private boolean isBal(Node nn) {
+		if(nn==null) {
+			return true;
+		}
+		boolean self=Math.abs(Ht(nn.left)-Ht(nn.right))<=1;
+		boolean L=isBal(nn.left);
+		boolean R=isBal(nn.right);
+		return L && R && self;
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

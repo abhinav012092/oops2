@@ -1,10 +1,11 @@
 package linkedlists;
 import java.util.*;
 
-import linkedlists.intersection_of_two_ll_2.ListNode;
+import linkedlists.linkedlist_cycle.ListNode;
 
-public class linkedlist_cycle {
+public class length_of_loop_ll {
 	public static Scanner sc = new Scanner(System.in);
+	
 	public static class ListNode {
 		int val=0;
 		ListNode next=null;
@@ -16,18 +17,31 @@ public class linkedlist_cycle {
 			this.next=next;
 		}
 	}
-	public static boolean hasCycle(ListNode head) {
-		if(head==null||head.next==null) return false;
+	
+	public static int lengthCycle(ListNode head) {
 		ListNode slow=head;
 		ListNode fast=head;
 		while(fast!=null && fast.next!=null) {
 			slow=slow.next;
 			fast=fast.next.next;
-			if(slow==fast) return true;
+			if(slow==fast) break;
 		}
-		return false;
+		if(slow!=fast) return 0;
+		fast=fast.next;
+		int cnt=1;
+		while(slow!=fast) {
+			cnt++;
+			fast=fast.next;
+		}
+		return cnt;
 	}
 	
+	public static void printList(ListNode head) {
+		while(head!=null) {
+			System.out.print(head.val+" ");
+			head=head.next;
+		}
+	}
 	public static void createCycle(ListNode head, int pos) {
 		ListNode ptr=head;
 		ListNode temp=head;
@@ -56,8 +70,8 @@ public class linkedlist_cycle {
 		// TODO Auto-generated method stub
 		int n=sc.nextInt();
 		ListNode ll=createList(n);
-		//createCycle(ll,2);
-		System.out.println(hasCycle(ll));
+		createCycle(ll,sc.nextInt());
+		System.out.println(lengthCycle(ll));
 	}
 
 }

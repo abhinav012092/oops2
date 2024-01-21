@@ -1,20 +1,21 @@
 package linkedlists;
 import java.util.*;
 
-class Node {
-	int data;
-	Node next;
-	
-	Node(int data1, Node next1){
-		this.data=data1;
-		this.next=next1;
-	}
-	Node(int data1){
-		this.data=data1;
-	}
-}
-
 public class search_element_in_ll {
+	
+	public static class Node {
+		int data;
+		Node next;
+		
+		Node(int data1, Node next1){
+			this.data=data1;
+			this.next=next1;
+		}
+		Node(int data1){
+			this.data=data1;
+		}
+	}
+	
 	public static int checkifPresent(Node head, int val) {
 		Node temp=head;
 		while(temp!=null) {

@@ -1,10 +1,11 @@
 package linkedlists;
 import java.util.*;
 
-import linkedlists.intersection_of_two_ll_2.ListNode;
+import linkedlists.length_of_loop_ll.ListNode;
 
-public class linkedlist_cycle {
+public class odd_even_LL {
 	public static Scanner sc = new Scanner(System.in);
+	
 	public static class ListNode {
 		int val=0;
 		ListNode next=null;
@@ -16,30 +17,26 @@ public class linkedlist_cycle {
 			this.next=next;
 		}
 	}
-	public static boolean hasCycle(ListNode head) {
-		if(head==null||head.next==null) return false;
-		ListNode slow=head;
-		ListNode fast=head;
-		while(fast!=null && fast.next!=null) {
-			slow=slow.next;
-			fast=fast.next.next;
-			if(slow==fast) return true;
+	
+	public static ListNode oddEven(ListNode head) {
+		ListNode odd=head;
+		ListNode even=head.next;
+		ListNode temp=head.next;
+		while(even!=null&& even.next!=null) {
+			odd.next=odd.next.next;
+			odd=odd.next;
+			even.next=even.next.next;
+			even=even.next;
 		}
-		return false;
+		odd.next=temp;
+		return head;
 	}
 	
-	public static void createCycle(ListNode head, int pos) {
-		ListNode ptr=head;
-		ListNode temp=head;
-		int cnt=0;
-		while(temp.next!=null) {
-			if(cnt!=pos) {
-				++cnt;
-				ptr=ptr.next;
-			}
-			temp=temp.next;
+	public static void printList(ListNode head) {
+		while(head!=null) {
+			System.out.print(head.val+" ");
+			head=head.next;
 		}
-		temp.next=ptr;
 	}
 	
 	public static ListNode createList(int n) {
@@ -56,8 +53,7 @@ public class linkedlist_cycle {
 		// TODO Auto-generated method stub
 		int n=sc.nextInt();
 		ListNode ll=createList(n);
-		//createCycle(ll,2);
-		System.out.println(hasCycle(ll));
+		ListNode res=oddEven(ll);
+		printList(res);
 	}
-
 }
