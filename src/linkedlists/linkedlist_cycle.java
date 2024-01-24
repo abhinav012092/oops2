@@ -52,12 +52,26 @@ public class linkedlist_cycle {
 		return dummy.next;
 	}
 	
+	public static void removeCycle(ListNode loop) {
+		ListNode ptr1=loop;
+		ListNode ptr2=loop;
+		int i=0;
+		ListNode prevNode=ptr1;
+		while(ptr1.next!=ptr2) {
+			prevNode=ptr1;
+			ptr1=ptr1.next;
+			i++;
+		}
+		prevNode.next=null;
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int n=sc.nextInt();
 		ListNode ll=createList(n);
-		//createCycle(ll,2);
+		createCycle(ll,2);
 		System.out.println(hasCycle(ll));
+		//removeCycle();
 	}
 
 }

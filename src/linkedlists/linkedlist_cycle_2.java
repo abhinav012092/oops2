@@ -41,7 +41,18 @@ public class linkedlist_cycle_2 {
 		}
 		return slow;
 	}
-	
+	public static void removeLoop(ListNode loop) {
+		ListNode ptr1=loop;
+		ListNode ptr2=loop;
+		int i=0;
+		ListNode prevNode=ptr1;
+		while(ptr1.next!=ptr2) {
+			prevNode=ptr1;
+			ptr1=ptr1.next;
+			i++;
+		}
+		prevNode.next=null;
+	}
 	public static ListNode takeInput() {
 		int n=sc.nextInt();
 		ListNode dummy=new ListNode(-1);
